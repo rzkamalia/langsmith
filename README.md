@@ -17,8 +17,8 @@
     ![reduce_streaming](assets/reduce_streaming.png)
 
 + LangSmith provides special rendering for retrieval steps in traces to make it easier to understand and diagnose retrieval issues. In order for retrieval steps to be rendered correctly, a few small steps need to be taken.
-    1. Annotate the retriever step with `run_type="retriever"`.
-    2. Return a list of Python dictionaries or TypeScript objects from the retriever step. Each dictionary should contain the following keys:
+    1) Annotate the retriever step with `run_type="retriever"`.
+    2) Return a list of Python dictionaries or TypeScript objects from the retriever step. Each dictionary should contain the following keys:
         + `page_content`: The text of the document.
         + `type`: This should always be "Document".
         + `metadata`: A Python dictionary or TypeScript object containing metadata about the document. This metadata will be displayed in the trace.
@@ -130,3 +130,19 @@ If we compare both experiments, the UI will appear as follows:
 If we click on **Charts**, the UI will display:
     ![experiment_3](assets/experiment_3.png)
 Experiment is very helpful for developers to monitor LLM applications efficiently.
+
+### Online Evaluation
+Case | Evaluator Example | Score Example 
+--- | --- | --- 
+For document retrieval tasks, check for hallucinations in the output. | `Check if this {answer} is grounded in these {documents}.` | `did_hallucinate = False`
+Scrore the perceived helpfulness of an answer to a user. | `Score the perceived helpfulness of the {answer} to this {question} from 1-10.` | `helpfulness = 7`
+For a Coding Assistant, check to see if the outputted code actually compiles and executes. | `Check if LLM output is a valid python code snippet that can execute with REPL.` | `code_is_valid = True`
+Check that the output matches a certain structure. | `For an Email Assistant, regex match that we correctly signed the email "Best wishes, Yoon".` | `correctly_signed = True`
+
+### Dashboard
++ We can use dashboards to create customized views for specific information that we are interested in. 
++ Dashboards can transcend tracing projects, so you can aggregate metrics across multiple projects.
++ Dashboards are a great way to create hih level views for stakeholders in our product to get a quick sense of how things are going.
+
+The picture below is an example of a dashboard that monitors token usage.
+![dashboard](assets/dashboard.png)
